@@ -8,7 +8,7 @@
     <p>ドキュメント製作者 池本雅也, 2020年02月08日<br>
       <br>
       採用フォント :<br>
-      <a href="http://jikasei.me/font/jf-dotfont/" target="_blank">JF-Dot-Shinomoe14</a><br>
+      <a href="menueUI_design.html" target="_blank">JF-Dot-Shinomoe14</a><br>
       <br>
       1.ウィンドウサイズ(編集中)<br>
       暫定で(2分割線,3分割線, 4分割線,5分割線,6分割線)を同時に描画可能な数値 (59) を<br>
@@ -146,7 +146,7 @@
       ☆遷移1-1-1....メニュー画面_1,"ステータス"項目フォーカス状態でEnter押下直後,キャ<br>
       クター選択待ち状態,チィポフォーカス状態<br>
       ☆遷移2-1....ニュー画面_2,選択キャラチィポ押下後,"つよさ" フォーカス時.<br>
-      (下の画像のフォントは<a href="http://itouhiro.hatenablog.com/entry/20130602/font" target="_blank">PixelMplus-20130602</a>)<br>
+      (下の画像のフォントはPixelMplus-20130602)<br>
       side05<br>
       <br>
       <br>
