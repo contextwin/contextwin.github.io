@@ -11,29 +11,24 @@
       キュメントです。<br>
       ソースコード: <a href="https://github.com/contextwin/Slaves" target="_blank">https://github.com/contextwin/Slaves</a><br>
       <br>
-      ☆Slaves/tool/perl... perl5で実装されたツールが格納されたディレクトリ、以下ツー<br>
-      ルの説明<br>
+      ☆Slaves/tool/perl... perl5で実装されたツールが格納されたディレクトリ、以下ツールの説明<br>
       <br>
-      sample... 中央画面分割線を描画可能なpixel数を算出するために書かれた、きちんと書<br>
-      き直すかは不明。名前も適当。<br>
+      sample... 中央画面分割線を描画可能なpixel数を算出するために書かれた、きちんと書き直すかは不明。名前も適当。<br>
       &nbsp;&nbsp; 数値の根拠に関しては<br>
       　Slaves メニュー画面UIデザイン設計書_レンダリング(編集中)<br>
       　を参照して下さい。<br>
       　使用法<br>
       　　$ ./sample<br>
-      　　引数無しでそのまま実行、現在の状態では算出する値を変更する場合はコード内の<br>
-      コメントアウトを付け外しするか新たに書き加える。<br>
+      　　引数無しでそのまま実行、現在の状態では算出する値を変更する場合はコード内のコメントアウトを付け外しするか新たに書き加える。<br>
       <br>
-      ☆Slaves/tool/sh... shで実装されたツールが格納されたディレクトリ、以下ツールの説<br>
-      明<br>
+      ☆Slaves/tool/sh... shで実装されたツールが格納されたディレクトリ、以下ツールの説明<br>
       <br>
-      git_add_src.sh... githubへのファイルのadd,commit,pushを半自動化。ビルトイン外の<br>
-      コマンドとしてgit コマンドに依存。<br>
+      git_add_src.sh... githubへのファイルのadd,commit,pushを半自動化。ビルトイン外のコマンドとしてgit コマンドに依存。<br>
       　使用法<br>
       　　$ ./git_add_src.sh<br>
-      　　引数無しでそのまま実行、更新された場合にadd,comimit,pushしたいファイル、デ<br>
-      ィレクトリはshファイル内3行目の/usr/bin/git add 以降にファイル名を記載する。<br>
-      commit時のメッセージとしてdateコマンドの実行結果が渡されるようになっている。<br>
+      　　引数無しでそのまま実行、更新された場合にadd,comimit,pushしたいファイル、ディレクトリは<br>
+      　　shファイル内3行目の/usr/bin/git add 以降にファイル名を記載する。<br>
+      　　commit時のメッセージとしてdateコマンドの実行結果が渡されるようになっている。<br>
       <br>
       image_resize.sh... 画像ファイルの大きさをリサイズする。<br>
       　使用法<br>
@@ -41,8 +36,7 @@
       &nbsp; <br>
       　使用例<br>
       　　$ ./image_resize.sh 80 a.png b.png<br>
-      　　上の使用例ではa.pngファイルの出力画像を80%のサイズにリサイズしてb.pngという<br>
-      ファイルに出力を保存する。<br>
+      　　上の使用例ではa.pngファイルの出力画像を80%のサイズにリサイズしてb.pngというファイルに出力を保存する。<br>
       <br>
       mid_to_ogg.sh... .mid形式の音楽ファイルを.oggファイルとして別ファイルに保存<br>
       　使用法<br>
@@ -50,21 +44,19 @@
       <br>
       　使用例<br>
       　　$ ./mid_to_ogg.sh hoge.mid<br>
-      　　上の使用例ではhoge.midファイルの内容を.ogg形式にコンバートしてhoge.oggとい<br>
-      うファイル名で保存。<br>
+      　　上の使用例ではhoge.midファイルの内容を.ogg形式にコンバートしてhoge.oggというファイル名で保存。<br>
       <br>
-      wgetslavesdoc.sh... http://contextwin.livedoor.blogの更新があるか確認して更新が<br>
-      あれば保存する。ビルトイン外のコマンドとしてwgetに依存している。<br>
+      wgetslavesdoc.sh... http://contextwin.livedoor.blogの更新があるか確認して更新があれば保存する。<br>
+      　ビルトイン外のコマンドとしてwgetに依存している。<br>
       　使用法<br>
       　　$ ./wgetslavesdoc.sh<br>
       　　引数なしでそのまま実行する。<br>
-      　　ブログの内容に更新があればツール実行中出力の後半にupdated,更新がなければ<br>
-      no-updatedと出力される。<br>
-      　　ツール実行後新たなidの新規ブログ記事が作成されていた場合は Slaves/doc/<br>
-      thisproject/. にアーカイブのブログ記事id番号のディレクトリが作成される。id番号<br>
-      のディレクトリは内部にcurrentとoldの２つのディレクトリを格納していて、currentに<br>
-      現在の状態の記事のhtmlファイル、oldに過去の記事のhtmlファイルがそれぞれツール実<br>
-      行時のdateコマンドの出力をファイル名にhtml形式で格納される。<br>
+          <br>
+      　　ブログの内容に更新があればツール実行中出力の後半にupdated,更新がなければ no-updated と出力される。<br>
+      　　ツール実行後新たなidの新規ブログ記事が作成されていた場合は Slaves/doc/ thisproject/. に<br>
+      　　アーカイブのブログ記事id番号のディレクトリが作成される。id番号のディレクトリは内部にcurrentとoldの２つのディレクトリを格納していて、<br>
+      　　currentに現在の状態の記事のhtmlファイル、oldに過去の記事のhtmlファイルがそれぞれツール実行時の<br>
+      　　dateコマンドの出力をファイル名にhtml形式で格納される。<br>
       <br>
       　実行中出力後半部分のメッセージ例<br>
       　　updated 5808849<br>
@@ -97,10 +89,8 @@
       <br>
       　使用例<br>
       　　$ ./xwindow_capture.sh hoge<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      実行後GUIマウスカーソルが"+"になるのでその状態でスクリーンショット撮りた<br>
-      いウィンドウを左クリックする。その後カレントディレクトリにhoge.xwd,hoge.pngが出<br>
-      力される。(Slaves のプロジェクトではxwdは使用される予定は無いです。)<br>
+      　　実行後GUIマウスカーソルが"+"になるのでその状態でスクリーンショット撮りたいウィンドウを左クリックする。<br>
+      　　その後カレントディレクトリにhoge.xwd,hoge.pngが出力される。(Slaves のプロジェクトではxwdは使用される予定は無いです。)<br>
       <br>
       ☆今後のtool追加開発予定<br>
       ・ブログサービスからダウンロードしたhtmlファイルをシンプルなhtmlにコンバートす<br>
