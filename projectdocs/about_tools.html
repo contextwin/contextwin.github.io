@@ -92,6 +92,15 @@
       　　実行後GUIマウスカーソルが"+"になるのでその状態でスクリーンショット撮りたいウィンドウを左クリックする。<br>
       　　その後カレントディレクトリにhoge.xwd,hoge.pngが出力される。(Slaves のプロジェクトではxwdは使用される予定は無いです。)<br>
       <br>
+      change_exif.sh... .jpeg形式のExif情報を初期化<br>
+      　使用法<br>
+      　　$ ./change_exif.sh [jgegfilename]<br>
+      <br>
+      　使用例<br>
+      　　$ ./change.sh hoge.jpeg<br>
+      　　実行後 hoge.jpeg のExif情報が変更され、HTMLなどで表示する際にスマホで撮影した写真データが反転しなくなる。
+      <br>
+      <br>
       ☆今後のtool追加開発予定<br>
       ・ブログサービスからダウンロードしたhtmlファイルをシンプルなhtmlにコンバートす<br>
       るツールを作成予定。このプロジェクトではcontextwinのgithub.ioにアップする用途に<br>
