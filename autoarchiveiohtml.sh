@@ -2,11 +2,11 @@
 # 外部コマンド wgetコマンドに依存しています!!
 DATE=`date "+%Y%m%d_%H%M%S"`
 WEBURL="https://contextwin.github.io"
-CONTEXTWINIO=".."
+CONTEXTWINIO="."
 ARCHIVESDIR="${CONTEXTWINIO}/archives"
 CURRENTDOCDIR="${ARCHIVESDIR}/current"
 OLDARCHIVESDIR="${ARCHIVESDIR}/old"
-HOROBIDOCS="../projectdocs"
+HOROBIDOCS="./projectdocs"
 
 if [ ! -e ${ARCHIVESDIR} ]; then
  mkdir ${ARCHIVESDIR}
