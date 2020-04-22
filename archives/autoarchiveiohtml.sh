@@ -33,6 +33,14 @@ done
 
 for LIST in `cat tmp_list`
 do
+WC=`ls -1 ${CURRENTDOCDIR}/${LIST} | wc -l`
+ if [ ${WC} -eq 0 ]; then
+ touch ${CURRENTDOCDIR}/${LIST}/a.html
+ fi
+done
+
+for LIST in `cat tmp_list`
+do
  if [ ! -e ${OLDARCHIVESDIR}/${LIST} ]; then
  mkdir ${OLDARCHIVESDIR}/${LIST}
  fi
@@ -50,8 +58,11 @@ do
 
  if [ ${WC} -gt 0 ]; then
   echo updated ${LIST} >> update_list
-  mv ${CURRENTDOCDIR}/${LIST}/*html ${OLDARCHIVESDUR}/${LIST}/.
+  mv ${CURRENTDOCDIR}/${LIST}/*html ${OLDARCHIVESDIR}/${LIST}/.
   mv ${CURRENTDOCDIR}/${DATE}.html ${CURRENTDOCDIR}/${LIST}/.
+  if [ -e ${CURRENTDOCDIR}/${LIST}/a.html ]; then
+  rm ${CURRENTDOCDIR}/${LIST}/a.html
+  fi
  else
   echo no-updated ${LIST} >> update_list
   rm ${CURRENTDOCDIR}/${DATE}.html
@@ -60,5 +71,6 @@ do
 done
 
 cat update_list
+rm update_list
 rm tmp_list
 
