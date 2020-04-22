@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>about_tools</title>
+  </head>
+  <body>Slaves 製作補助ツール類について<br>
+    <p>ドキュメント製作者 池本雅也, 作成日 2020年04月04日<br>
+      <br>
+      Slaves/tool/* に自作製作補助ツール類を格納していきます。それらのツールの説明ド<br>
+      キュメントです。<br>
+      ソースコード: <a href="https://github.com/contextwin/Slaves" target="_blank">https://github.com/contextwin/Slaves</a><br>
+      <br>
+      ☆Slaves/tool/perl... perl5で実装されたツールが格納されたディレクトリ、以下ツールの説明<br>
+      <br>
+      sample... 中央画面分割線を描画可能なpixel数を算出するために書かれた、きちんと書き直すかは不明。名前も適当。<br>
+      &nbsp;&nbsp; 数値の根拠に関しては<br>
+      　Slaves メニュー画面UIデザイン設計書_レンダリング(編集中)<br>
+      　を参照して下さい。<br>
+      　使用法<br>
+      　　$ ./sample<br>
+      　　引数無しでそのまま実行、現在の状態では算出する値を変更する場合はコード内のコメントアウトを付け外しするか新たに書き加える。<br>
+      <br>
+      ☆Slaves/tool/sh... shで実装されたツールが格納されたディレクトリ、以下ツールの説明<br>
+      <br>
+      git_add_src.sh... githubへのファイルのadd,commit,pushを半自動化。ビルトイン外のコマンドとしてgit コマンドに依存。<br>
+      　使用法<br>
+      　　$ ./git_add_src.sh<br>
+      　　引数無しでそのまま実行、更新された場合にadd,comimit,pushしたいファイル、ディレクトリは<br>
+      　　shファイル内3行目の/usr/bin/git add 以降にファイル名を記載する。<br>
+      　　commit時のメッセージとしてdateコマンドの実行結果が渡されるようになっている。<br>
+      <br>
+      image_resize.sh... 画像ファイルの大きさをリサイズする。<br>
+      　使用法<br>
+      　　$ ./image_resize.sh [percentage] [originalfilepath] [resizedfilepath]<br>
+      &nbsp; <br>
+      　使用例<br>
+      　　$ ./image_resize.sh 80 a.png b.png<br>
+      　　上の使用例ではa.pngファイルの出力画像を80%のサイズにリサイズしてb.pngというファイルに出力を保存する。<br>
+      <br>
+      mid_to_ogg.sh... .mid形式の音楽ファイルを.oggファイルとして別ファイルに保存<br>
+      　使用法<br>
+      　　$ ./mid_to_ogg.sh [.midfilepath]<br>
+      <br>
+      　使用例<br>
+      　　$ ./mid_to_ogg.sh hoge.mid<br>
+      　　上の使用例ではhoge.midファイルの内容を.ogg形式にコンバートしてhoge.oggというファイル名で保存。<br>
+      <br>
+      wgetslavesdoc.sh... http://contextwin.livedoor.blogの更新があるか確認して更新があれば保存する。<br>
+      　ビルトイン外のコマンドとしてwgetに依存している。<br>
+      　使用法<br>
+      　　$ ./wgetslavesdoc.sh<br>
+      　　引数なしでそのまま実行する。<br>
+          <br>
+      　　ブログの内容に更新があればツール実行中出力の後半にupdated,更新がなければ no-updated と出力される。<br>
+      　　ツール実行後新たなidの新規ブログ記事が作成されていた場合は Slaves/doc/ thisproject/. に<br>
+      　　アーカイブのブログ記事id番号のディレクトリが作成される。id番号のディレクトリは内部にcurrentとoldの２つのディレクトリを格納していて、<br>
+      　　currentに現在の状態の記事のhtmlファイル、oldに過去の記事のhtmlファイルがそれぞれツール実行時の<br>
+      　　dateコマンドの出力をファイル名にhtml形式で格納される。<br>
+      <br>
+      　実行中出力後半部分のメッセージ例<br>
+      　　updated 5808849<br>
+      　　no-updated 5798823<br>
+      　　no-updated 5796065<br>
+      　　no-updated 5796005<br>
+      　　no-updated 5793358<br>
+      　　no-updated 5435893<br>
+      　　no-updated 5422771<br>
+      　　no-updated 5402599<br>
+      　　no-updated 5331764<br>
+      　　no-updated 5307375<br>
+      　<br>
+      　実行後のディレクトリ構成例<br>
+      　　Slaves/doc/thisproject/5307375/.<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; current/.<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      20200403_212323.html<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; old/.<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      20200329_050001.html<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      20200331_160117.html<br>
+      <br>
+      <br>
+      xwindow_capture.sh... ウィンドウをキャプチャしてスクリーンショット画像を作成。<br>
+      　使用法<br>
+      　　$ ./xwindow_capture.sh [filename_withoutextension]<br>
+      　　第一引数に拡張子のない保存用ファイル名を指定渡す。<br>
+      <br>
+      　使用例<br>
+      　　$ ./xwindow_capture.sh hoge<br>
+      　　実行後GUIマウスカーソルが"+"になるのでその状態でスクリーンショット撮りたいウィンドウを左クリックする。<br>
+      　　その後カレントディレクトリにhoge.xwd,hoge.pngが出力される。(Slaves のプロジェクトではxwdは使用される予定は無いです。)<br>
+      <br>
+      change_exif.sh... .jpeg形式のExif情報を初期化<br>
+      　使用法<br>
+      　　$ ./change_exif.sh [jgegfilename]<br>
+      <br>
+      　使用例<br>
+      　　$ ./change.sh hoge.jpeg<br>
+      　　実行後 hoge.jpeg のExif情報が変更され、HTMLなどで表示する際にスマホで撮影した写真データが反転しなくなる。
+      <br>
+      <br>
+      ☆今後のtool追加開発予定<br>
+      ・ブログサービスからダウンロードしたhtmlファイルをシンプルなhtmlにコンバートす<br>
+      るツールを作成予定。このプロジェクトではcontextwinのgithub.ioにアップする用途に<br>
+      使用したい。(ブログサービでのみの管理はドキュメント作成、編集は楽だが、閲覧時が<br>
+      あまり快適では無いと判断)。<br>
+      <br>
+      ・wgetslavesdoc.shに関して現在構文解析がライブドアブログのhtml記述にのみ対応し<br>
+      ているためもっと汎用に他のブログサービスや、webページの更新に関しても使用できる<br>
+      ツールに書き直すかも知れない。うまくいけば高次なブラウザソフトを用いずにRSSフィ<br>
+      ードのようなサービスをローカルのターミナルで実現可能なるはず。言語はperl5を用い<br>
+      るかも知れない。便利そうならcontextwinの個人のプロジェクトとしてC言語でcuiコマ<br>
+      ンドとしての再実装とxlib or xcbを用いてGUIアプリケーションとして実装するかも。<br>
+      運良く亡びの風プロジェクトで新規にプログラマーとしての参入者が現れ合意が得られ<br>
+      れば共同開発したい。</p>
+  </body>
+</html>

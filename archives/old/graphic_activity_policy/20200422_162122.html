@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>graphic_activity_policy</title>
+  </head>
+  <body>
+    <p>Slaves グラフィックイメージ製作者活動方針</p>
+    <p>ドキュメント製作者 池本雅也, 作成日 2020年02月03日</p>
+    <p>このドキュメントの内容を亡びの風のメンバーは誰でも自由に批判して良い。<br>
+      <br>
+      ☆グラフィックイメージについて<br>
+      いつもプアーなスペックのPCに向かってデータサイズを小さくする努力をする。(配色は基本RGBか白黒)<br>
+      ココぞという場合にのみ豊かな表現を用いる。<br>
+      <br>
+      ☆対応可能画像データフォーマットについて<br>
+      プログラミングの際にライブラリにsdl2を採用します、<br>
+      ICO(アイコン),<br>
+      CUR(カーソル),<br>
+      BMP,<br>
+      PNM(PPM/PGM/PBM),<br>
+      XPM, LBM(IFF ILBM),<br>
+      PCX,<br>
+      GIF,<br>
+      JPEG,<br>
+      PNG,<br>
+      TGA,<br>
+      TIFF,<br>
+      XVサムネイル形式<br>
+      であれば描画自体は可能です。(透過ピクセル対応可)<br>
+      <br>
+      ☆基本的にイラスト類はpng形式で保存<br>
+      ・C言語の標準ライブラリでpng形式のデータを処理できるようになった(libpng)。<br>
+      &nbsp;&nbsp;&nbsp; (SDL2内でもlibpngが使用されている)<br>
+      ・拡大縮小に強いらしい<br>
+      以上の理由で、寿命の長いデータフォーマットになるであろうと予想されるためイラス<br>
+      ト画像データに関してはなるだけpngで保存していきます。<br>
+      <br>
+      ☆ウィンドウサイズなどの規定<br>
+      Slaves UI設計(編集中)<br>
+      <a href="menueUI_design.html" target="_blank">http://contextwin.livedoor.blog/archives/5435893.html<br>
+      </a><br>
+      ☆現在のリソースの保存先<br>
+      ソースコードを含む全部<br>
+      <a href="https://github.com/contextwin/Slaves" target="_blank">https://github.com/contextwin/Slaves</a><br>
+      画像データに関しては上記のディレクトリ内の<br>
+      Slaves/image ディレクトリ内に保存されています。<br>
+      <br>
+      ☆以下は現在のimageディレクトリ内の内容です。<br>
+      image:<br>
+      &nbsp;current: // 現在プログラム内で仕様中のデータを格納するディレクトリ<br>
+      &nbsp;&nbsp; image_resize.sh -&gt; ../../tool/sh/image_resize.sh //
+      画像データリサイズ用shへ<br>
+      のシンボリックリンク<br>
+      &nbsp;&nbsp; menue1: // メニュー画面1内で使用されているもの<br>
+      &nbsp;&nbsp;&nbsp;&nbsp; chipo_overall_30.png<br>
+      &nbsp;&nbsp; menue2: // メニュー画面2内で使用されているもの<br>
+      &nbsp;&nbsp;&nbsp;&nbsp; chipo_side01_68.png<br>
+      &nbsp;<br>
+      &nbsp;origin: // グラフィック担当から受け取ったデータの原本<br>
+      &nbsp;&nbsp; gabi: // 作者<br>
+      &nbsp;&nbsp;&nbsp; rough: // ラフ画<br>
+      &nbsp;&nbsp;&nbsp;&nbsp; chipo: // キャラクター、チィポに関するデータ<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chipo_sd_center.mp4<br>
+      <br>
+      &nbsp;&nbsp; kitunei:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp; rough:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chipo:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chipo_center01.png<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chipo_overall.jpeg<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chipo_side01.png</p>
+  </body>
+</html>
