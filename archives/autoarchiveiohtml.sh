@@ -2,12 +2,11 @@
 # 外部コマンド wgetコマンドに依存しています!!
 DATE=`date "+%Y%m%d_%H%M%S"`
 WEBURL="https://contextwin.github.io"
-CONTEXTWINIO="/home/contextwin/work/src/contextwin.github.io"
+CONTEXTWINIO=".."
 ARCHIVESDIR="${CONTEXTWINIO}/archives"
 CURRENTDOCDIR="${ARCHIVESDIR}/current"
 OLDARCHIVESDIR="${ARCHIVESDIR}/old"
-HOROBIDOCS="/home/contextwin/work/src/contextwin.github.io/projectdocs"
-
+HOROBIDOCS="../projectdocs"
 
 if [ ! -e ${ARCHIVESDIR} ]; then
  mkdir ${ARCHIVESDIR}
@@ -73,4 +72,3 @@ done
 cat update_list
 rm update_list
 rm tmp_list
-
