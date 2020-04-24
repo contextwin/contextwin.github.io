@@ -6,8 +6,6 @@ DATE=`date "+%Y%m%d_%H%M%S"`
 WEBURL="https://contextwin.github.io"
 CONTEXTWINIO="."
 ARCHIVESDIR="${CONTEXTWINIO}/archives"
-#CURRENTDOCDIR="${ARCHIVESDIR}/current"
-#OLDARCHIVESDIR="${ARCHIVESDIR}/old"
 HOROBIDOCS="./projectdocs"
 
 # 引数チェック (コマンドラインからの引数を受け取るようにしても良いかも)
