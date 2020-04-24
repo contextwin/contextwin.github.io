@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>menueUI_design</title>
+  </head>
+  <body>Slaves メニュー画面UIデザイン設計書_レンダリング(編集中)<br>
+    <p>ドキュメント製作者 池本雅也, 作成日 2020年02月08日<br>
+      <br>
+      採用フォント :<br>
+      <a href="http://jikasei.me/font/jf-dotfont/" target="_blank">JF-Dot-Shinomoe14</a><br>
+      <br>
+      1.ウィンドウサイズ(編集中)<br>
+      暫定で(2分割線,3分割線, 4分割線,5分割線,6分割線)を同時に描画可能な数値 (59) を<br>
+      ルートにし、<br>
+      パディングとして (1), 倍数として (59)ずつ増大させたpixel sizeでウィンドウサイズ<br>
+      を決定します。<br>
+      &nbsp;・59 + (1 + 59) + (1 + 59) + (1 + 59) ........<br>
+      &nbsp;&nbsp;&nbsp; 上記のイメージで増大させます。&nbsp;&nbsp;&nbsp;&nbsp; <br>
+      説明を下記に記述します。<br>
+      <br>
+      &nbsp;1-1 : 二分割線が描画可能なpixel数に関して<br>
+      &nbsp;pixel数が3以上の整数で2で割った時に余りが1になる奇数(つまり3より大きい全ての奇<br>
+      数)であれば、二分割線(中央分割線)を描画することが可能になります。<br>
+      &nbsp; これから先の文章ではこの時数列の根底として使われる値(今回は3)をroot_num(仮)と<br>
+      して記述します。<br>
+      &nbsp; 例<br>
+      &nbsp;・ pixel size (root_num)3 = (1, *1, 1)の場合真ん中の*1が中央の数字であることが<br>
+      わかります。<br>
+      &nbsp; これから先の文章では分割線描画のためのこの1を*1というふうに" * "を付けて記述<br>
+      します。<br>
+      &nbsp; これから先の文章では、分割線描画のための*1をpadding(仮)として記述します。<br>
+      &nbsp;・ pixel size 5 = (1, 1, *1, 1, 1)も同様です。<br>
+      &nbsp; 中央までの数は 1 + (n / 2 の商)で求めることが出来ます。<br>
+      &nbsp; ・pixel size 7の場合 (7 / 2) = 3,ですので、中央分割のためのpixelは4pixel目(1<br>
+      + 3)となります。構造としては 7 = (3, *1, 3)であり中央の1が分割線描画のためpixel<br>
+      となります。<br>
+      &nbsp;&nbsp; これから先の文章内では先頭ピクセルからpaddingまでの(paddingも含めた)pixelの<br>
+      総和をdivision_pixel(仮)と記述します。division_pixel目のpixelに分割線が描画され<br>
+      ることになります。<br>
+      &nbsp;プログラミングによるdivision_pixel算出の流れとしては (行程内の代数nはずつ増大<br>
+      させる)<br>
+      &nbsp; 行程1,数値がroot_num以上であるかどうかを判定(root_num &lt;= 3); (root_num)3以下<br>
+      であれば例外処理<br>
+      &nbsp; 行程2,数値が奇数であるかどうかを判定 (n % 2);　答えが1であれば次の行程に進む<br>
+      、0であれば例外処理<br>
+      &nbsp; 行程3,数値を2で割った商を求める(n / 2);<br>
+      &nbsp; 行程4,行程3の答えに(padding) 1を足す;<br>
+      &nbsp; となります。<br>
+      <br>
+      &nbsp;二分割線を描画することが可能なpixel数を維持したままウィンドウサイズを増大させ<br>
+      る場合は、<br>
+      &nbsp; 3 + 2 + 2 + 2 + 2 + 2 + 2 ...... となりますが、この足す数2の意図は、<br>
+      &nbsp; (1 + 1)であり、左の項である1は分割線描画のためのpixelに用いられます。<br>
+      &nbsp; つまり、<br>
+      &nbsp; (root_num)3 + (1 + 1) + (1 + 1) + (1 + 1) ..... のように増大していくイメージ<br>
+      のほうがより詳細かと思われます。<br>
+      <br>
+      &nbsp;1-2 : 二分割線と三分割線が描画可能なpixel数に関して<br>
+      &nbsp;pixel数が5以上の整数で3で割った時に余りが2になる奇数であれば、二分割線(中央分<br>
+      割線)と三分割線を描画することが可能になります。つまりroot_numは5です。3より大き<br>
+      い奇数であり、なおかつ3で割った時の余りが2になる数。<br>
+      &nbsp; root_num = (3 + 2); // 5<br>
+      &nbsp; 例<br>
+      &nbsp;・ pixel size 5 = (1, *1, 1, *1, 1)の場合真ん中の2pixel目と4pixel目が三分割線<br>
+      描画ために使えるpixel(division_pixel)であることがわかります。<br>
+      &nbsp;・ pixel size 11 = (1, 1, 1, *1, 1, 1, 1, *1, 1, 1, 1)も同様です。<br>
+      &nbsp; １つめのdivision_pixelの数は (n / 3 の商) + (padding)1 で求めることが出来ます<br>
+      。<br>
+      &nbsp; ・pixel size 17の場合 (17 / 3) = 5, ですので、１つめのdivision_pixelは6pixel<br>
+      目(5 + 1)となります。構造としては 17 = (5,*1, 5,*1,5)であり１つめの<br>
+      division_pixe(つまり6)にさらに6 = (((pading)1 + (root_num)5)を足した12pixel目が<br>
+      ２つめのdivision_pixelとなります。<br>
+      &nbsp;プログラミングによる算出の流れとしては<br>
+      &nbsp; 行程1,数値がroot_num以上であるかどうかを判定(root_num &lt;= n); (root_num)5以下<br>
+      であれば例外処理<br>
+      &nbsp; 行程2,数値が奇数であるかどうかを判定 (n % 2);　答えが1であれば次の行程に進む<br>
+      、0であれば例外処理<br>
+      &nbsp; 行程3,数値を3で割った商を求める(n / 3);<br>
+      &nbsp; 行程4,行程3とpadingの和を求める; １つ目のdivision_pixelを算出<br>
+      &nbsp; 行程5,行程4の答え(division_pixel)に(division_pixel)を足します; 2つ目の<br>
+      division_pixelを算出<br>
+      &nbsp;となります。<br>
+      &nbsp;二分割線を描画することが可能なpixel数を維持したまま、<br>
+      &nbsp;なおかつ三分割線を描画することが可能なpixel数を維持しウィンドウサイズを増大さ<br>
+      せる場合は、<br>
+      &nbsp; (root_num)5 + (1 + 5) + (1 + 5) + (1 + 5) ..... のように増大していくイメージ<br>
+      です。<br>
+      <br>
+      1-3 : 二分割線と三分割線と四分割線が描画可能なpixel数に関して<br>
+      &nbsp;root_num = 11 になります。 (2で割った時の余りが1であり、3で割った時の余りが2で<br>
+      あり、4で割った時の余りが3である整数の最小)。<br>
+      &nbsp; 例<br>
+      &nbsp;・ pixel size 11 = (1, 1, *1, 1, 1, *1, 1, 1,*1, 1, 1)。<br>
+      &nbsp; １つめのdivision_pixelの数は (n / 4 の商) + (padding)1 で求めることが出来ます<br>
+      。<br>
+      &nbsp;プログラミングによる算出の流れとしては<br>
+      &nbsp; 行程1,数値がroot_num以上であるかどうかを判定(root_num &lt;= n); (root_num)11以下<br>
+      であれば例外処理<br>
+      &nbsp; 行程2,数値が奇数であるかどうかを判定 (n % 2);　答えが1であれば次の行程に進む<br>
+      、0であれば例外処理<br>
+      &nbsp; 行程3,数値を4で割った商を求める(n / 4);<br>
+      &nbsp; 行程4,行程3とpadingの和を求める; １つ目のdivision_pixelを算出<br>
+      &nbsp; 行程5,行程3の答え(division_pixel)に(division_pixel)を足します; 2つ目の<br>
+      division_pixelを算出<br>
+      &nbsp;となります。<br>
+      &nbsp;二分割線を描画することが可能なpixel数を維持したまま、<br>
+      &nbsp;なおかつ三分割線を描画することが可能なpixel数を維持したまま、<br>
+      &nbsp;なおかつ四分割線を描画することが可能なpixel数を維持してウィンドウサイズを増大<br>
+      させる場合は、<br>
+      &nbsp; (root_num)11 + (1 + 11) + (1 + 11) + (1 + 11) ..... のように増大していくイメ<br>
+      ージです。<br>
+      <br>
+      1-4 : 二分割線と三分割線と四分割線と五分割線が描画可能なpixel数に関して<br>
+      &nbsp;root_num = 59 になります。 (2で割った時の余りが1であり、3で割った時の余りが2で<br>
+      あり、4で割った時の余りが3であり,5で割った時の余りが4の整数の最小)。<br>
+      &nbsp;root_num = 59 は6分割線の描画も可能。<br>
+      &nbsp; １つめのdivision_pixelの数は (n / 5 の商) + (padding)1 で求めることが出来ます<br>
+      。<br>
+      &nbsp;プログラミングによる算出の流れとしては。<br>
+      &nbsp; 行程1,数値がroot_num以上であるかどうかを判定(root_num &lt;= n); (root_num)59以下<br>
+      であれば例外処理<br>
+      &nbsp; 行程2,数値が奇数であるかどうかを判定 (n % 2);　答えが1であれば次の行程に進む<br>
+      、0であれば例外処理<br>
+      &nbsp; 行程3,数値を4で割った商を求める(n / 5);<br>
+      &nbsp; 行程4,行程3とpadingの和を求める; １つ目のdivision_pixelを算出<br>
+      &nbsp; 行程5,行程3の答え(division_pixel)に(division_pixel)を足します; 2つ目の<br>
+      division_pixelを算出<br>
+      &nbsp;となります。<br>
+      &nbsp;二分割線を描画することが可能なpixel数を維持したまま、<br>
+      &nbsp;なおかつ三分割線を描画することが可能なpixel数を維持したまま、<br>
+      &nbsp;なおかつ四分割線を描画することが可能なpixel数を維持してウィンドウサイズを増大<br>
+      させる場合は、<br>
+      &nbsp; (root_num) + (1 + 59) + (1 + 59) + (1 + 59) ..... のように増大していくイメー<br>
+      ジです。<br>
+      <br>
+      <br>
+      <br>
+      <br>
+      ☆遷移1-1....メニュー画面_1,メニューボタン押下直後,項目選択待ち状態,"ステータス"<br>
+      フォーカス状態<br>
+      <img src="./image/picture01.jpeg">
+      <br>
+      (以下作成途中段階の画像)<br>
+      <img src="./image/menue1_8.png">
+      <br>
+      <br>
+      ☆遷移1-1-1....メニュー画面_1,"ステータス"項目フォーカス状態でEnter押下直後,キャ<br>
+      クター選択待ち状態,チィポフォーカス状態<br>
+      ☆遷移2-1....ニュー画面_2,選択キャラチィポ押下後,"つよさ" フォーカス時.<br>
+      (下の画像のフォントは<a href="http://itouhiro.hatenablog.com/entry/20130602/font" target="_blank">PixelMplus-20130602</a>)<br>
+      <img src="./image/menue2forUIdocs.png">
+      <br>
+      <br>
+      <br>
+      イラスト.... 狐寧(きつねい)<br>
+      UIデザイン.... ガビ<br>
+      UIデザイン、プログラミング、ドキュメント編集....contextwin(池本雅也)</p>
+  </body>
+</html>
