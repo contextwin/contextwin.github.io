@@ -71,7 +71,7 @@ do
    rm ${DATE}
   elif [ 0 -lt ${DIFF} ]; then # 既にあるファイルとの差分がある場合の処理
    echo "Updated ${URL_STR}" >> diff_result.txt
-   mv "${MKDIR_PATH_CURRENT}/*" "${MKDIR_PATH_OLD}/."
+   mv "${MKDIR_PATH_CURRENT}/"* "${MKDIR_PATH_OLD}/."
    mv ${DATE} "${MKDIR_PATH_CURRENT}/."
   fi
  fi
