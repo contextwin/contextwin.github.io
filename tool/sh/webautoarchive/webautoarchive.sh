@@ -28,6 +28,7 @@ if [ ! -e ${ARCHIVESDIR} ]; then
  mkdir ${ARCHIVESDIR}
 fi
 
+# ftpも対応させる
 for URL_STR in `grep -E "http://|https://" ${URL_LIST}`
 do
  # url_list.txt 読み込み
@@ -51,7 +52,11 @@ do
  # ダウンロード成功時,失敗時の分岐処理
  if [ 0 -eq `echo $?` ]; then # ダウンロード成功の場合の処理
   echo "Download completed " "${URL_STR}" >> wget_result.txt
- else
+  for LIST in `perl -nle 'print  /<img[^>]+src="(.+?)"|<video[^>]+src="(.+?)"/' ./${DATE}`
+  do
+  echo ${LIST}
+  done
+ else # ダウンロード失敗の場合の処理
   echo "Download failed " "${URL_STR} " "Processing interruption." >> wget_result.txt
   continue
  fi
@@ -84,3 +89,7 @@ cat diff_result.txt
 rm diff_result.txt
 
 exit 0
+
+#Below URL is web pages of easy explanation this tool.
+#http://contextwin.livedoor.blog/archives/5808849.html
+#https://contextwin.github.io/projectdocs/about_tools.html
