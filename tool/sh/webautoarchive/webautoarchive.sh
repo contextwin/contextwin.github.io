@@ -32,51 +32,104 @@ fi
 for URL_STR in `grep -E "http://|https://" ${URL_LIST}`
 do
  # url_list.txt 読み込み
+ FILE_NAME=`basename ${URL_STR}`
  TMP_STR=`echo ${URL_STR} | sed -e "s/^http:\/\/\|^https:\/\///"`
- MKDIR_PATH_CURRENT="${ARCHIVESDIR}/${TMP_STR}/current"
- MKDIR_PATH_OLD="${ARCHIVESDIR}/${TMP_STR}/old"
- 
- # ディレクトリ作成処理
+ MKDIR_PATH=${ARCHIVESDIR}/${TMP_STR}
+ MKDIR_PATH_CURRENT=`echo ${MKDIR_PATH}/${DATE}`
+
+ # ディレクトリ作成処理 old
+ if [ ! -e "${MKDIR_PATH}/old" ] ; then
+  mkdir -p "${MKDIR_PATH}/old"
+  echo "Created directory  ${MKDIR_PATH}/old"
+ fi
+
+ # ディレクトリ作成処理 Date
  if [ ! -e ${MKDIR_PATH_CURRENT} ]; then
   mkdir -p ${MKDIR_PATH_CURRENT}
   echo "Created directory ${MKDIR_PATH_CURRENT}"
  fi
  
- if [ ! -e ${MKDIR_PATH_OLD} ]; then
-  mkdir -p ${MKDIR_PATH_OLD}
-  echo "Created directory ${MKDIR_PATH_OLD}"
- fi
- 
  # ダウンロード処理
- wget -O "./${DATE}" ${URL_STR} > /dev/null 2>&1
+ wget -O "${MKDIR_PATH_CURRENT}/${FILE_NAME}" ${URL_STR} > /dev/null 2>&1
  # ダウンロード成功時,失敗時の分岐処理
  if [ 0 -eq `echo $?` ]; then # ダウンロード成功の場合の処理
-  echo "Download completed " "${URL_STR}" >> wget_result.txt
-  for LIST in `perl -nle 'print  /<img[^>]+src="(.+?)"|<video[^>]+src="(.+?)"/' ./${DATE}`
+  echo "Download completed " "${URL_STR} " >> wget_result.txt
+  CURRENT_FILE_PATH="${MKDIR_PATH_CURRENT}/${FILE_NAME}"
+  # img video のデータがあればディレクトリ作成しダウンロードする
+  for LIST in `perl -nle 'print /<img[^>]+src="(.+?)"|<video[^>]+src="(.+?)"/' ./${CURRENT_FILE_PATH}`
   do
-  echo ${LIST}
+  
+   # 現在相対パスの場合のみ対応
+   BASENAME=`basename ${LIST}`
+   LIST=`echo ${LIST} | perl -pe 's/^\.//' | perl -ne 'print /(.*)(?=\/)/'`
+   URL_STR2=`dirname ${URL_STR}`
+   URL_STR2="${URL_STR2}/`echo ${LIST} | perl -pe 's/^.*\///'`/${BASENAME}"
+   LIST="${MKDIR_PATH_CURRENT}${LIST}"
+  
+   # ディレクトリ作成処理 (current)
+   if [ ! -e ${LIST} ]; then
+    mkdir -p ${LIST}
+    echo "Created directory ${MKDIR_PATH_CURRENT}${LIST}"
+   fi
+   
+   LIST="${LIST}/${BASENAME}"
+   # ダウンロード処理
+   wget -O "${LIST}" "${URL_STR2}" > /dev/null 2>&1
+   echo "Download completed " " ${URL_STR2}" >> wget_result.txt
   done
  else # ダウンロード失敗の場合の処理
   echo "Download failed " "${URL_STR} " "Processing interruption." >> wget_result.txt
   continue
  fi
- 
- # ダウンロードファイル移動
- WC=`ls -1U ${MKDIR_PATH_CURRENT} | wc -l`
- if [ 0 -eq ${WC} ]; then # current ディレクトリが空だった場合の処理
-     echo "New ${URL_STR}" >> diff_result.txt
-  mv ${DATE} "${MKDIR_PATH_CURRENT}/."
- else # current ディレクトリにすでにファイルがある場合の処理
-  DIFF=`diff ${DATE} ${MKDIR_PATH_CURRENT}/* | wc -l`
-  # 更新チェック処理
-  if [ 0 -eq ${DIFF} ]; then # 既にあるファイルとの差分がない場合の処理
-   echo "No-updated ${URL_STR}" >> diff_result.txt
-   rm ${DATE}
-  elif [ 0 -lt ${DIFF} ]; then # 既にあるファイルとの差分がある場合の処理
+
+ # アップデート確認　&　ディレクトリ移動移動処理
+ WC=`ls -1U ${MKDIR_PATH} | wc -l`
+ if [ 2 -eq ${WC} ]; then # Dateディレクトリ, oldだけだった場合の処理
+  echo "New ${URL_STR}" >> diff_result.txt
+  continue
+ elif [ 3 -eq ${WC} ]; then # Dateディレクトリにファイルが３つある場合の処理
+  DIR_PATH_OLD=`ls -1U ${MKDIR_PATH} | grep -v -e ${DATE} -e old`
+  find ${MKDIR_PATH}/${DATE} -type f | sort | sed -e "s/^.*${DATE}//" > currentfile.txt
+  find ${MKDIR_PATH}/${DIR_PATH_OLD} -type f | sort | sed -e "s/^.*${DIR_PATH_OLD}//" > oldfile.txt
+  CURRENT_FILEWC=`cat currentfile.txt | wc -l`
+  OLD_FILEWC=`cat oldfile.txt | wc -l`
+  
+ # find ${MKDIR_PATH}/${DATE} -type f | sort | sed -e "s/^.*${DATE}//" > currentfile.txt
+ # find ${MKDIR_PATH}/${DIR_PATH_OLD} -type f | sort | sed -e "s/^.*${DIR_PATH_OLD}//" > oldfile.txt
+  
+  if [ ${CURRENT_FILEWC} -eq ${OLD_FILEWC} ]; then # ファイル数を比較して同一の場合
+  
+   # ファイル名の差分比較
+   FILE_NAME_DIFF=`diff currentfile.txt oldfile.txt | wc -l`
+   
+   if [ 0 -eq ${FILE_NAME_DIFF} ]; then # ファイル名が全て同一の場合
+    
+    # ダウンロードしたファイルの差分比較
+    for LIST in `cat currentfile.txt`
+    do
+     DIFF=`diff "${MKDIR_PATH}/${DATE}${LIST}" "${MKDIR_PATH}/${DIR_PATH_OLD}${LIST}" | wc -l`
+     # 更新チェック処理
+     if [ 0 -eq ${DIFF} ]; then # 既にあるファイルとの差分がない場合の処理
+      echo "No-updated ${URL_STR}" >> diff_result.txt
+     elif [ 0 -lt ${DIFF} ]; then # 既にあるファイルとの差分がある場合の処理
+      echo "Updated ${URL_STR}" >> diff_result.txt
+      mv "${MKDIR_PATH}/${DIR_PATH_OLD}" "${MKDIR_PATH}/old/."
+     fi
+    done
+    
+    rm currentfile.txt oldfile.txt
+    rm -r ${MKDIR_PATH_CURRENT}
+    
+   else # ファイル名に差がある場合
+      echo "Updated ${URL_STR}" >> diff_result.txt
+      mv "${MKDIR_PATH}/${DIR_PATH_OLD}" "${MKDIR_PATH}/old/."
+   fi 
+
+  else # ファイル数に差がある場合
    echo "Updated ${URL_STR}" >> diff_result.txt
-   mv "${MKDIR_PATH_CURRENT}/"* "${MKDIR_PATH_OLD}/."
-   mv ${DATE} "${MKDIR_PATH_CURRENT}/."
+   mv "${MKDIR_PATH}/${DIR_PATH_OLD}" "${MKDIR_PATH}/old/."
   fi
+ 
  fi
 done
 
