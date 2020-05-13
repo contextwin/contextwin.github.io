@@ -1,6 +1,7 @@
 #!/bin/sh
 # 同じディレクトリに url_list ファイルを用意して下さい
 # 外部コマンド wgetコマンドに依存しています!!
+
 URL_LIST="url_list.txt"
 DATE=`date "+%Y%m%d_%H%M%S"`
 WEBURL="https://contextwin.github.io"
@@ -93,9 +94,6 @@ do
   find ${MKDIR_PATH}/${DIR_PATH_OLD} -type f | sort | sed -e "s/^.*${DIR_PATH_OLD}//" > oldfile.txt
   CURRENT_FILEWC=`cat currentfile.txt | wc -l`
   OLD_FILEWC=`cat oldfile.txt | wc -l`
-  
- # find ${MKDIR_PATH}/${DATE} -type f | sort | sed -e "s/^.*${DATE}//" > currentfile.txt
- # find ${MKDIR_PATH}/${DIR_PATH_OLD} -type f | sort | sed -e "s/^.*${DIR_PATH_OLD}//" > oldfile.txt
   
   if [ ${CURRENT_FILEWC} -eq ${OLD_FILEWC} ]; then # ファイル数を比較して同一の場合
   
